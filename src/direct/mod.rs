@@ -3,12 +3,12 @@
 pub mod files;
 pub mod header;
 
-use self::files::DPacFiles;
-use self::header::DPacHeader;
+use self::files::PacFiles;
+use self::header::PacHeader;
 
 /// The Low-Level interpretation of PAC data
 #[derive(Clone)]
 pub struct DPac {
-    pub header: DPacHeader,
-    pub files: DPacFiles,
+    pub header: PacHeader,
+    pub files: PacFiles,
 }

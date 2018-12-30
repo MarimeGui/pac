@@ -4,27 +4,27 @@ use ez_io::{ReadE, WriteE};
 use std::io::{Read, Write};
 
 #[derive(Clone)]
-pub struct DPacData {
+pub struct PacData {
     pub magic_number: [u8; 2],
-    /// Number of DPacInfo sections
+    /// Number of PacInfo sections
     pub pack_cnt: u32,
     pub file_type: u32,
-    /// Where the compressed data begins, relative to beginning of DPacData (@ 0x1234)
-    pub data_offset: u32,
-    pub info: Vec<DPacInfo>,
+    /// Where the compressed data begins, relative to beginning of PacData (@ 0x1234)
+    pub hdr_offset: u32,
+    pub info: Vec<PacInfo>,
 }
 
 #[derive(Clone)]
-pub struct DPacInfo {
+pub struct PacInfo {
     pub unpack_size: u32,
     pub pack_size: u32,
     pub offset: u32,
 }
 
-impl DPacData {
-    pub fn import<R: Read>(reader: &mut R) -> Result<DPacData> {
+impl PacData {
+    pub fn import<R: Read>(reader: &mut R) -> Result<PacData> {
         let pack_cnt = reader.read_le_to_u32()?;
-        Ok(DPacData {
+        Ok(PacData {
             magic_number: {
                 let mut magic_number = [0u8; 2];
                 reader.read_exact(&mut magic_number)?;
@@ -35,11 +35,11 @@ impl DPacData {
             },
             pack_cnt,
             file_type: reader.read_le_to_u32()?,
-            data_offset: reader.read_le_to_u32()?,
+            hdr_offset: reader.read_le_to_u32()?,
             info: {
                 let mut info = Vec::with_capacity(pack_cnt as usize); // Lossy
                 for _ in 0..pack_cnt {
-                    info.push(DPacInfo::import(reader)?);
+                    info.push(PacInfo::import(reader)?);
                 }
                 info
             },
@@ -49,7 +49,7 @@ impl DPacData {
         writer.write_all(&self.magic_number)?;
         writer.write_le_to_u32(self.pack_cnt)?;
         writer.write_le_to_u32(self.file_type)?;
-        writer.write_le_to_u32(self.data_offset)?;
+        writer.write_le_to_u32(self.hdr_offset)?;
         for i in &self.info {
             i.export(writer)?;
         }
@@ -57,9 +57,9 @@ impl DPacData {
     }
 }
 
-impl DPacInfo {
-    pub fn import<R: Read>(reader: &mut R) -> Result<DPacInfo> {
-        Ok(DPacInfo {
+impl PacInfo {
+    pub fn import<R: Read>(reader: &mut R) -> Result<PacInfo> {
+        Ok(PacInfo {
             unpack_size: reader.read_le_to_u32()?,
             pack_size: reader.read_le_to_u32()?,
             offset: reader.read_le_to_u32()?,

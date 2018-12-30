@@ -10,6 +10,8 @@ pub enum PacError {
     MagicNumber,
     /// A value in the "packing_flag" field in DPacFile is not recognized.
     UnknownPackingType(u32),
+    /// HDR Offset was not the expected value
+    WrongHdrOffset,
 }
 
 impl From<IOError> for PacError {

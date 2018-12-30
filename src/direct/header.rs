@@ -7,17 +7,17 @@ use std::io::{Read, Write};
 
 /// Direct representation of the data found in the header
 #[derive(Clone)]
-pub struct DPacHeader {
+pub struct PacHeader {
     pub magic_number: [u8; 8], // 'DW_PACK\0'
     pub file_pos: u32,         // Always 0
     pub file_cnt: u32,
     pub status: u32, // Always 0
 }
 
-impl DPacHeader {
+impl PacHeader {
     /// Reads the data from a Read object
-    pub fn import<R: Read>(reader: &mut R) -> Result<DPacHeader> {
-        Ok(DPacHeader {
+    pub fn import<R: Read>(reader: &mut R) -> Result<PacHeader> {
+        Ok(PacHeader {
             magic_number: {
                 let mut magic_number = [0u8; 8];
                 reader.read_exact(&mut magic_number)?;

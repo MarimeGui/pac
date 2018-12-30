@@ -4,7 +4,7 @@ use std::io::{Read, Write};
 
 /// Represents the information stored about a file contained in a PAC file
 #[derive(Clone)]
-pub struct DPacFile {
+pub struct PacFile {
     pub unk1: u32,
     pub file_index: u16,
     pub unk2: u16,
@@ -15,9 +15,9 @@ pub struct DPacFile {
     pub file_offset: u32,
 }
 
-impl DPacFile {
-    pub fn import<R: Read>(reader: &mut R) -> Result<DPacFile> {
-        Ok(DPacFile {
+impl PacFile {
+    pub fn import<R: Read>(reader: &mut R) -> Result<PacFile> {
+        Ok(PacFile {
             unk1: reader.read_le_to_u32()?,
             file_index: reader.read_le_to_u16()?,
             unk2: reader.read_le_to_u16()?,
