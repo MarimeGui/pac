@@ -1,7 +1,7 @@
 extern crate ez_io;
 
-pub mod direct;
 pub mod decompression;
+pub mod direct;
 pub mod error;
 pub mod file;
 
@@ -21,7 +21,7 @@ pub struct Pac {
 // impl From<DPac> for Pac {
 //     fn from(direct: DPac) -> Pac {
 //         Pac {
-            
+
 //         }
 //     }
 // }

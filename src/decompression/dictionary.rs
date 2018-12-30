@@ -1,6 +1,6 @@
-use std::io::Read;
-use super::DICT_LEN;
 use super::utils::load_new_data;
+use super::DICT_LEN;
+use std::io::Read;
 
 pub fn make_dict<R: Read>(
     dict: &mut [u16; DICT_LEN * 2],
