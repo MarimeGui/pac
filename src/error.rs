@@ -4,6 +4,7 @@ use std::io::Error as IOError;
 use std::string::FromUtf8Error;
 
 /// The main error type used in this crate
+#[derive(Debug)]
 pub enum PacError {
     /// IO Error
     IO(IOError),
