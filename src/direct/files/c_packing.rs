@@ -1,7 +1,7 @@
 use crate::error::PacError;
 use crate::Result;
 use ez_io::{ReadE, WriteE};
-use std::io::{Read, Seek, SeekFrom, Write};
+use std::io::{Read, Seek, Write};
 
 #[derive(Clone)]
 pub struct PacCompressedPacking {
